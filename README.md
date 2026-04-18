@@ -1,4 +1,4 @@
-# hackathon2026-ArjunKumarSoni
+# Hackathon2026-ArjunKumarSoni
 Autonomous Support Resolution Agent
 # 🚀 Autonomous Support Resolution Agent
 Agentic AI Hackathon 2026 Submission
