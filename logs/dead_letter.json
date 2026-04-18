@@ -1,0 +1,10 @@
+[
+    {
+        "ticket_id": "TKT-016",
+        "error": "Customer not found"
+    },
+    {
+        "ticket_id": "TKT-017",
+        "error": "Order not found: ORD-9999"
+    }
+]
