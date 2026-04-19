@@ -1,206 +1,216 @@
-# Hackathon2026-ArjunKumarSoni
-Autonomous Support Resolution Agent
-# 🚀 Autonomous Support Resolution Agent
-Agentic AI Hackathon 2026 Submission
+# 🚀 Autonomous Support Resolution Agent (Agentic AI Hackathon 2026)
 
-=========================Problem Statement====================
+## 🧠 Problem Statement
 
-Build an autonomous AI agent that can process customer support tickets end-to-end — not just classify them, but **take real actions** like refunds, replies, and escalation.
+Customer support systems are overloaded with repetitive queries (refunds, product issues, FAQs), yet most still rely on human intervention.
 
-## 🎯 Solution Overview
+This project builds an **autonomous AI agent** that:
 
-This project implements a **production-style Agentic AI system** that:
-
-* Ingests support tickets
-* Classifies intent (refund / product issue / general)
-* Uses multiple tools to gather context
-* Takes autonomous actions (refund, reply, escalate)
-* Logs every decision for auditability
+* Understands support tickets
+* Takes real actions using tools
+* Resolves issues end-to-end without human involvement
 
 ---
 
-## 🧠 Key Features
+## ⚡ What Makes This Different
 
-### ✅ Multi-Step Agent Reasoning
+> ❌ Not a chatbot
+> ✅ A real **agent that acts**
 
-* Executes **3+ tool calls per ticket**
-* Example chain:
+* Performs **multi-step reasoning**
+* Uses **tool chaining (3+ calls per ticket)**
+* Executes **real actions (refund, reply, escalate)**
+* Handles failures like a production system
+
+---
+
+## 🏗️ Architecture Overview
 
 ```
-get_customer → get_order → get_product → check_refund → issue_refund
-```
-
----
-
-### ⚡ Concurrency (Parallel Processing)
-
-* Processes multiple tickets simultaneously
-* Improves performance and scalability
-
----
-
-### 🔁 Retry Logic (Resilient System)
-
-* Automatic retries on tool failures
-* Prevents system crashes
-
----
-
-### 📊 Audit Logging (Explainability)
-
-* Logs every step, decision, and outcome
-* Output stored in:
-
-```
-logs/audit_log.json
+Tickets → Agent (Decision Engine)
+              ↓
+     Tool Layer (Customer / Order / Product / KB)
+              ↓
+     Action Layer (Refund / Reply / Escalate)
+              ↓
+     Logging Layer (Audit Logs + Dead Letter Queue)
 ```
 
 ---
 
-### 🚨 Failure Handling + Dead Letter Queue
+## 🔧 Tech Stack
 
-* Failed tickets are not lost
-* Stored in:
+* **Python**
+* **Streamlit** (UI Dashboard)
+* **Async / Concurrency**
+* **JSON-based Mock APIs**
 
-```
-logs/dead_letter.json
+---
+
+## 🚀 Key Features
+
+### 🤖 Agentic Intelligence
+
+* Multi-step decision making (not single LLM call)
+* Dynamic reasoning based on ticket context
+* Minimum **3+ tool calls per resolution**
+
+### 🛠️ Tool Integration
+
+* `get_customer()`
+* `get_order()` / fallback to customer orders
+* `get_product()`
+* `check_refund_eligibility()`
+* `issue_refund()`
+* `send_reply()`
+* `escalate()`
+
+---
+
+### ⚙️ Autonomous Actions
+
+* Refund processing (with eligibility check)
+* Customer response generation
+* Smart escalation with context
+
+---
+
+### 🔁 Production Readiness
+
+* ✅ Retry logic with backoff
+* ✅ Failure handling (timeouts, invalid data)
+* ✅ Dead Letter Queue for failed tickets
+* ✅ Concurrency (parallel ticket processing)
+
+---
+
+### 📊 Explainability & Logging
+
+* Full **audit trail per ticket**
+* Logs include:
+
+  * tool calls
+  * decisions
+  * confidence score
+  * error handling
+
+Example:
+
+```json
+{
+  "ticket_id": "TKT-001",
+  "steps": [
+    "get_customer",
+    "get_order",
+    "get_product",
+    "classify:refund",
+    "check_refund",
+    "issue_refund",
+    "send_reply"
+  ],
+  "decision": "refund_issued",
+  "confidence": "high"
+}
 ```
 
 ---
 
-### 🎯 Confidence Scoring
+### 🖥️ UI Dashboard
 
-* **High** → Successful execution
-* **Medium** → Fallback used
-* **Low** → Error or escalation
-
----
-
-## 🏗️ Architecture
-
-```
-Tickets Input
-     ↓
-Agent (Decision Engine)
-     ↓
-----------------------------------
-|  Tools Layer                   |
-|  - get_customer               |
-|  - get_order                  |
-|  - get_product                |
-|  - knowledge base             |
-----------------------------------
-     ↓
-Actions Layer
-- issue_refund
-- send_reply
-- escalate
-     ↓
-Logging Layer
-- audit_log.json
-- dead_letter.json
-```
-
----
-
-## ⚙️ Tech Stack
-
-* Python
-* LangChain / LangGraph (Agent orchestration)
-* JSON-based mock APIs
-* Async / Threading for concurrency
+* Upload tickets.json
+* Run agent in one click
+* Live processing view
+* Results + audit logs visualization
 
 ---
 
 ## ▶️ How to Run
 
+### 1. Clone Repo
+
 ```bash
-# Clone repo
-git clone https://github.com/YOUR_USERNAME/hackathon2026-yourname.git
-
-# Go to project folder
+git clone https://github.com/your-username/hackathon2026-yourname.git
 cd hackathon2026-yourname
+```
 
-# Install dependencies
+### 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-# Run agent
+### 3. Run Agent (CLI)
+
+```bash
 python main.py
 ```
 
+### 4. Run UI Dashboard
+
+```bash
+streamlit run ui_app.py
+```
+
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
 ```
-hackathon2026-yourname/
+hackathon2026/
+├── main.py
+├── ui_app.py
 ├── agent/
 ├── tools/
+├── utils/
 ├── data/
 ├── logs/
-├── main.py
-├── requirements.txt
-├── README.md
+│   ├── audit_log.json
+│   ├── dead_letter.json
 ```
 
 ---
 
-## 🧪 Sample Output
+## ⚠️ Failure Modes & Handling
 
-```
-🎫 Processing Ticket: TKT-001
-
-🔹 Fetching customer...
-🔹 Fetching order...
-🔹 Fetching product...
-
-🧠 Category: refund
-
-[Refund Issued] Order ORD-1001: $129.99  
-[Reply Sent] Ticket TKT-001: Your refund has been processed.
-
-📊 Confidence: HIGH
-```
-
----
-
-## ⚠️ Failure Modes Handled
-
-* Order API timeout → retry → escalate
-* Customer not found → escalate
-* Refund failure → retry → fallback
+| Scenario         | Handling           |
+| ---------------- | ------------------ |
+| Tool timeout     | Retry + escalate   |
+| Invalid customer | Escalate           |
+| Refund failure   | Retry → fallback   |
+| Missing order_id | Fetch latest order |
 
 ---
 
 ## 🎥 Demo
 
-👉 (Add your demo video link here)
+* Run the agent on 20 tickets
+* Show refund, escalation, and logging
+* Display audit logs for transparency
 
 ---
 
-## 📊 Deliverables
+## 🏆 Why This Solution Stands Out
 
-* ✅ Working agent
-* ✅ Audit logs
-* ✅ Failure modes
-* ✅ Architecture design
-* ✅ Demo
-
----
-
-👨‍💻 Author
-
-ARJUN KUMAR SONI
-Agentic AI Hackathon 2026
+* Real **agentic architecture (not rule-based script)**
+* Handles **uncertainty and failures**
+* Fully **explainable decisions**
+* Designed like a **production system**
 
 ---
 
-🚀 Final Note
+## 🚀 Future Improvements
 
-This project focuses on real-world agentic behavior:
-
-* Not just answering → **taking actions**
-* Not just predicting → "reasoning + executing"
-* Not just success → "handling failures gracefully"
+* LLM-based semantic classification
+* Vector search for knowledge base
+* Real API integrations
+* Deployment with Docker
 
 ---
+
+## 👨‍💻 Author
+
+Hackathon 2026 Submission
+
+---
+
+> “Not just AI that talks — AI that acts.”
