@@ -107,45 +107,66 @@ def append_audit_entry(entry):
 
 
 def print_ticket_header(ticket_id):
-    with OUTPUT_LOCK:
-        print(f"\n{SEPARATOR}")
-        print(f"🎫 Processing Ticket: {ticket_id}")
-        print(SEPARATOR)
+    return [f"\n{SEPARATOR}", f"🎫 Processing Ticket: {ticket_id}", SEPARATOR]
 
 
 def print_step(label):
-    with OUTPUT_LOCK:
-        print(f"\n🔹 {label}")
+    return [f"\n🔹 {label}"]
 
 
 def print_success(message):
-    with OUTPUT_LOCK:
-        print(f"   ✅ {message}")
+    return [f"   ✅ {message}"]
 
 
 def print_detail(icon, message):
-    with OUTPUT_LOCK:
-        print(f"   {icon} {message}")
+    return [f"   {icon} {message}"]
 
 
 def print_separator():
+    return [SEPARATOR]
+
+
+def append_output(output_lines, lines):
+    output_lines.extend(lines)
+
+
+def flush_output(output_lines):
     with OUTPUT_LOCK:
-        print(SEPARATOR)
+        for line in output_lines:
+            print(line)
 
 
-def safe_send_reply(ticket_id, message):
-    with OUTPUT_LOCK:
-        return send_reply(ticket_id, message)
+def safe_send_reply(ticket_id, message, output_lines=None):
+    reply_line = f"[Reply Sent] Ticket {ticket_id}: {message}"
+    if output_lines is None:
+        with OUTPUT_LOCK:
+            send_reply(ticket_id, message)
+    else:
+        append_output(output_lines, [reply_line])
+    return reply_line
 
 
-def safe_issue_refund(order_id, amount):
-    with OUTPUT_LOCK:
-        return issue_refund(order_id, amount)
+def safe_issue_refund(order_id, amount, output_lines=None):
+    refund_line = f"[Refund Issued] Order {order_id}: ${amount}"
+    if output_lines is None:
+        with OUTPUT_LOCK:
+            issue_refund(order_id, amount)
+    else:
+        append_output(output_lines, [refund_line])
+    return refund_line
 
 
-def safe_escalate(ticket_id, summary, priority="high"):
-    with OUTPUT_LOCK:
-        return escalate(ticket_id, summary, priority)
+def safe_escalate(ticket_id, summary, priority="high", output_lines=None):
+    escalate_lines = [
+        f"[Escalated] Ticket {ticket_id} | Priority: {priority}",
+        f"Summary: {summary}",
+    ]
+    if output_lines is None:
+        with OUTPUT_LOCK:
+            escalate(ticket_id, summary, priority)
+    else:
+        append_output(output_lines, escalate_lines)
+    return escalate_lines
 
 
 def _retry_step_name(func):
@@ -247,7 +268,8 @@ def _warranty_active(order, product, reference_date):
 def process_ticket(ticket):
     ticket_id = ticket.get("ticket_id", "UNKNOWN")
     logging.info("Processing ticket %s", ticket_id)
-    print_ticket_header(ticket_id)
+    output_lines = []
+    append_output(output_lines, print_ticket_header(ticket_id))
 
     steps = []
     category = "unknown"
@@ -261,17 +283,17 @@ def process_ticket(ticket):
         logging.info("Step 1: Ticket read | email=%s", ticket.get("customer_email"))
 
         # 2) Get customer using customer_email
-        print_step("Fetching customer...")
+        append_output(output_lines, print_step("Fetching customer..."))
         customer = _call_tool_with_retry(ticket_id, steps, get_customer, ticket["customer_email"])
         steps.append("get_customer")
         logging.info(
             "Step 2: Customer resolved | customer_id=%s",
             customer["customer_id"],
         )
-        print_success(f"Customer: {customer['name']} ({customer['email']})")
+        append_output(output_lines, print_success(f"Customer: {customer['name']} ({customer['email']})"))
 
         # 3) Get order: by order_id if present, else latest order for customer
-        print_step("Fetching order...")
+        append_output(output_lines, print_step("Fetching order..."))
         provided_order_id = extract_order_id(ticket)
         if provided_order_id:
             order = _call_tool_with_retry(ticket_id, steps, get_order, provided_order_id)
@@ -292,7 +314,7 @@ def process_ticket(ticket):
                 "Step 3: No order_id found, using latest order | order_id=%s",
                 order["order_id"],
             )
-        print_success(f"Order ID: {order['order_id']} | Amount: ${order['amount']}")
+        append_output(output_lines, print_success(f"Order ID: {order['order_id']} | Amount: ${order['amount']}"))
 
         # 4) Validate order belongs to customer
         if order.get("customer_id") != customer.get("customer_id"):
@@ -302,7 +324,7 @@ def process_ticket(ticket):
         logging.info("Step 4: Order ownership validated")
 
         # 5) Get product from order
-        print_step("Fetching product...")
+        append_output(output_lines, print_step("Fetching product..."))
         product = _call_tool_with_retry(ticket_id, steps, get_product, order["product_id"])
         steps.append("get_product")
         logging.info(
@@ -310,17 +332,17 @@ def process_ticket(ticket):
             product["product_id"],
             product["name"],
         )
-        print_success(f"Product: {product['name']}")
+        append_output(output_lines, print_success(f"Product: {product['name']}"))
 
         # 6) Classify ticket (refund / issue / general)
-        print_step("Classifying ticket...")
+        append_output(output_lines, print_step("Classifying ticket..."))
         category = classify_ticket(ticket)
         steps.append(f"classify:{category}")
         logging.info("Step 6: Classified as %s", category)
-        print_detail("🧠", f"Category: {category}")
+        append_output(output_lines, print_detail("🧠", f"Category: {category}"))
 
         # 7) Take action
-        print_step("Taking action...")
+        append_output(output_lines, print_step("Taking action..."))
         ticket_text = _ticket_text(ticket).lower()
         reference_date = _ticket_reference_date(ticket)
 
@@ -336,6 +358,7 @@ def process_ticket(ticket):
                     ticket_id,
                     f"Potential social engineering attempt on {order['order_id']}: tier claim mismatch.",
                     "high",
+                    output_lines=output_lines,
                 )
                 _call_tool_with_retry(
                     ticket_id,
@@ -343,6 +366,7 @@ def process_ticket(ticket):
                     safe_send_reply,
                     ticket_id,
                     "We could not verify the requested privilege. Your request will follow standard policy review.",
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 steps.append("escalate")
@@ -357,6 +381,7 @@ def process_ticket(ticket):
                         safe_send_reply,
                         ticket_id,
                         f"Your order {order['order_id']} has been cancelled successfully. You will receive email confirmation shortly.",
+                        output_lines=output_lines,
                     )
                     steps.append("send_reply")
                     logging.info("Cancellation confirmed")
@@ -368,6 +393,7 @@ def process_ticket(ticket):
                         safe_send_reply,
                         ticket_id,
                         f"Order {order['order_id']} is already shipped and cannot be cancelled. Please request a return after delivery.",
+                        output_lines=output_lines,
                     )
                     steps.append("send_reply")
                     logging.info("Cancellation denied due to shipped status")
@@ -379,6 +405,7 @@ def process_ticket(ticket):
                         safe_send_reply,
                         ticket_id,
                         f"Order {order['order_id']} is already delivered and cannot be cancelled. We can still help with a return if eligible.",
+                        output_lines=output_lines,
                     )
                     steps.append("send_reply")
                     logging.info("Cancellation denied due to delivered status")
@@ -391,6 +418,7 @@ def process_ticket(ticket):
                     safe_send_reply,
                     ticket_id,
                     f"Refund for order {order['order_id']} is already processed. It usually reflects in 5-7 business days.",
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 logging.info("Already-refunded confirmation sent")
@@ -413,7 +441,7 @@ def process_ticket(ticket):
                     eligibility["reason"],
                 )
                 steps.append("check_refund")
-                print_detail("🔍", f"Eligibility: {eligibility}")
+                append_output(output_lines, print_detail("🔍", f"Eligibility: {eligibility}"))
 
                 defect_keywords = ["broken", "defect", "defective", "not working", "cracked"]
                 wants_replacement = "replacement" in ticket_text
@@ -427,6 +455,7 @@ def process_ticket(ticket):
                         ticket_id,
                         f"Warranty claim for {order['order_id']} ({product['name']}). Defect reported and warranty appears active.",
                         "medium",
+                        output_lines=output_lines,
                     )
                     _call_tool_with_retry(
                         ticket_id,
@@ -434,6 +463,7 @@ def process_ticket(ticket):
                         safe_send_reply,
                         ticket_id,
                         "Your item appears to be under warranty. We have escalated this to our warranty team for priority handling.",
+                        output_lines=output_lines,
                     )
                     steps.append("send_reply")
                     steps.append("escalate")
@@ -447,6 +477,7 @@ def process_ticket(ticket):
                         ticket_id,
                         f"Customer requested replacement for {order['order_id']} ({product['name']}).",
                         "medium",
+                        output_lines=output_lines,
                     )
                     _call_tool_with_retry(
                         ticket_id,
@@ -454,6 +485,7 @@ def process_ticket(ticket):
                         safe_send_reply,
                         ticket_id,
                         "We have escalated your replacement request to our fulfilment specialist team.",
+                        output_lines=output_lines,
                     )
                     steps.append("send_reply")
                     steps.append("escalate")
@@ -468,6 +500,7 @@ def process_ticket(ticket):
                             ticket_id,
                             f"Refund requires human approval: order {order['order_id']} amount ${order['amount']}",
                             "medium",
+                            output_lines=output_lines,
                         )
                         _call_tool_with_retry(
                             ticket_id,
@@ -475,6 +508,7 @@ def process_ticket(ticket):
                             safe_send_reply,
                             ticket_id,
                             f"Your refund request for order {order['order_id']} is approved in principle and has been sent for final review.",
+                            output_lines=output_lines,
                         )
                         steps.append("send_reply")
                         steps.append("escalate")
@@ -487,6 +521,7 @@ def process_ticket(ticket):
                             safe_issue_refund,
                             order["order_id"],
                             order["amount"],
+                            output_lines=output_lines,
                         )
                         steps.append("issue_refund")
                         _call_tool_with_retry(
@@ -495,6 +530,7 @@ def process_ticket(ticket):
                             safe_send_reply,
                             ticket_id,
                             f"Your refund for order {order['order_id']} has been processed.",
+                            output_lines=output_lines,
                         )
                         steps.append("send_reply")
                         logging.info("Refund issued and reply sent")
@@ -509,6 +545,7 @@ def process_ticket(ticket):
                             f"Refund request for order {order['order_id']} was denied: {eligibility['reason']}. "
                             "If needed, we can help with warranty or exchange options."
                         ),
+                        output_lines=output_lines,
                     )
                     steps.append("send_reply")
                     logging.info("Refund denied reply sent")
@@ -541,6 +578,7 @@ def process_ticket(ticket):
                     safe_send_reply,
                     ticket_id,
                     f"We can arrange a free exchange for order {order['order_id']}. If you prefer, we can also process a full refund.",
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 logging.info("Wrong-item exchange options sent")
@@ -553,6 +591,7 @@ def process_ticket(ticket):
                     ticket_id,
                     f"Replacement requested for order {order['order_id']} ({product['name']}).",
                     "medium",
+                    output_lines=output_lines,
                 )
                 _call_tool_with_retry(
                     ticket_id,
@@ -560,6 +599,7 @@ def process_ticket(ticket):
                     safe_send_reply,
                     ticket_id,
                     "Your replacement request has been sent to our specialist team for immediate handling.",
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 steps.append("escalate")
@@ -572,6 +612,7 @@ def process_ticket(ticket):
                     safe_issue_refund,
                     order["order_id"],
                     order["amount"],
+                    output_lines=output_lines,
                 )
                 steps.append("issue_refund")
                 _call_tool_with_retry(
@@ -580,6 +621,7 @@ def process_ticket(ticket):
                     safe_send_reply,
                     ticket_id,
                     f"We are sorry your item arrived damaged. A full refund for order {order['order_id']} has been issued.",
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 logging.info("Damage-on-arrival refund issued")
@@ -592,6 +634,7 @@ def process_ticket(ticket):
                     ticket_id,
                     f"Warranty investigation needed for order {order['order_id']} ({product['name']}).",
                     "medium",
+                    output_lines=output_lines,
                 )
                 _call_tool_with_retry(
                     ticket_id,
@@ -599,6 +642,7 @@ def process_ticket(ticket):
                     safe_send_reply,
                     ticket_id,
                     "We have escalated your case to our warranty team for a repair/replacement decision.",
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 steps.append("escalate")
@@ -614,6 +658,7 @@ def process_ticket(ticket):
                         f"We are sorry about the issue with {product['name']} "
                         f"(order {order['order_id']}). Our support team will help with replacement or resolution."
                     ),
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 logging.info("Product issue reply sent")
@@ -632,6 +677,7 @@ def process_ticket(ticket):
                     safe_send_reply,
                     ticket_id,
                     f"Your order {order['order_id']} is currently {order.get('status')}. Tracking number: {tracking}.",
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 logging.info("Order tracking reply sent")
@@ -647,6 +693,7 @@ def process_ticket(ticket):
                         "High-value electronics are 15 days, accessories are 60 days. "
                         "Exchanges are available for wrong size/colour/item subject to stock."
                     ),
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 logging.info("Policy guidance reply sent")
@@ -661,13 +708,22 @@ def process_ticket(ticket):
                         "Please share your order ID and whether you need a refund, replacement, or delivery support. "
                         "We will help you right away."
                     ),
+                    output_lines=output_lines,
                 )
                 steps.append("send_reply")
                 logging.info("Clarification reply sent")
                 decision = "clarification_requested"
 
         else:
-            _call_tool_with_retry(ticket_id, steps, safe_escalate, ticket_id, "Unable to classify ticket intent", "medium")
+            _call_tool_with_retry(
+                ticket_id,
+                steps,
+                safe_escalate,
+                ticket_id,
+                "Unable to classify ticket intent",
+                "medium",
+                output_lines=output_lines,
+            )
             steps.append("escalate")
             logging.info("Unknown ticket escalated")
             decision = "escalated_unknown_intent"
@@ -675,21 +731,29 @@ def process_ticket(ticket):
         status = "success"
         confidence = score_confidence(steps, status)
 
-        print_detail("🎯", f"Action: {decision}")
-        print_detail("📊", f"Confidence: {confidence.upper()}")
-        print_separator()
+        append_output(output_lines, print_detail("🎯", f"Action: {decision}"))
+        append_output(output_lines, print_detail("📊", f"Confidence: {confidence.upper()}"))
+        append_output(output_lines, print_separator())
 
     except Exception as exc:
         # 8) Handle errors -> escalate
         logging.exception("Step 8: Error while processing ticket %s", ticket_id)
-        print_detail("❌", f"Error: {exc}")
-        _call_tool_with_retry(ticket_id, steps, safe_escalate, ticket_id, str(exc), "high")
+        append_output(output_lines, print_detail("❌", f"Error: {exc}"))
+        _call_tool_with_retry(
+            ticket_id,
+            steps,
+            safe_escalate,
+            ticket_id,
+            str(exc),
+            "high",
+            output_lines=output_lines,
+        )
         steps.append("escalate")
         status = "failed"
         confidence = score_confidence(steps, status)
-        print_detail("🎯", "Action: Escalated due to error")
-        print_detail("📊", f"Confidence: {confidence.upper()}")
-        print_separator()
+        append_output(output_lines, print_detail("🎯", "Action: Escalated due to error"))
+        append_output(output_lines, print_detail("📊", f"Confidence: {confidence.upper()}"))
+        append_output(output_lines, print_separator())
         decision = "processing_failed"
         error_message = str(exc)
     finally:
@@ -701,6 +765,7 @@ def process_ticket(ticket):
             "error": error_message,
         }
         append_audit_entry(audit_entry)
+        flush_output(output_lines)
 
     return {
         "ticket_id": ticket_id,

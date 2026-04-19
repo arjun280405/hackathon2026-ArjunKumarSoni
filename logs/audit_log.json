@@ -2546,5 +2546,1350 @@
         "decision": "processing_failed",
         "confidence": "low",
         "error": "Order not found: ORD-9999"
+    },
+    {
+        "ticket_id": "TKT-014",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-012",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "order_cancelled",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-003",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-002",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-013",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-005",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-009",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "refund_already_processed",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-008",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "damage_refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-015",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-004",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-018",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "flagged_policy_abuse",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-001",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-011",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-016",
+        "steps": [
+            "retry:get_customer:1",
+            "retry:get_customer:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Customer not found"
+    },
+    {
+        "ticket_id": "TKT-010",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "order_status_shared",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-007",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-020",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "product_issue_reply_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-006",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "cancellation_denied_delivered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-019",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-017",
+        "steps": [
+            "get_customer",
+            "retry:get_order:1",
+            "retry:get_order:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Order not found: ORD-9999"
+    },
+    {
+        "ticket_id": "TKT-001",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-009",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "refund_already_processed",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-003",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-004",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-002",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-010",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "order_status_shared",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-006",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "cancellation_denied_delivered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-005",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-008",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "damage_refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-012",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "order_cancelled",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-014",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-007",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-011",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-015",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-013",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-018",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "flagged_policy_abuse",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-019",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-020",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "product_issue_reply_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-016",
+        "steps": [
+            "retry:get_customer:1",
+            "retry:get_customer:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Customer not found"
+    },
+    {
+        "ticket_id": "TKT-017",
+        "steps": [
+            "get_customer",
+            "retry:get_order:1",
+            "retry:get_order:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Order not found: ORD-9999"
+    },
+    {
+        "ticket_id": "TKT-003",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-010",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "order_status_shared",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-013",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-001",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-002",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-005",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-014",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-004",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-008",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "damage_refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-012",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "order_cancelled",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-015",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-011",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-007",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-006",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "cancellation_denied_delivered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-009",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "refund_already_processed",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-018",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "flagged_policy_abuse",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-019",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-020",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "product_issue_reply_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-016",
+        "steps": [
+            "retry:get_customer:1",
+            "retry:get_customer:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Customer not found"
+    },
+    {
+        "ticket_id": "TKT-017",
+        "steps": [
+            "get_customer",
+            "retry:get_order:1",
+            "retry:get_order:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Order not found: ORD-9999"
+    },
+    {
+        "ticket_id": "TKT-001",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-002",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-003",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-004",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-005",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-006",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "cancellation_denied_delivered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-007",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-008",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "damage_refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-009",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "refund_already_processed",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-010",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "order_status_shared",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-011",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-012",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "order_cancelled",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-013",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-014",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-015",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-016",
+        "steps": [
+            "retry:get_customer:1",
+            "retry:get_customer:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Customer not found"
+    },
+    {
+        "ticket_id": "TKT-017",
+        "steps": [
+            "get_customer",
+            "retry:get_order:1",
+            "retry:get_order:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Order not found: ORD-9999"
+    },
+    {
+        "ticket_id": "TKT-018",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "flagged_policy_abuse",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-019",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-020",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "product_issue_reply_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-001",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-002",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-003",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-004",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-005",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-006",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "cancellation_denied_delivered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-007",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-008",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "issue_refund",
+            "send_reply"
+        ],
+        "decision": "damage_refund_issued",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-009",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "refund_already_processed",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-010",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "order_status_shared",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-011",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "exchange_or_refund_offered",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-012",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply"
+        ],
+        "decision": "order_cancelled",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-013",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "check_refund",
+            "send_reply"
+        ],
+        "decision": "refund_denied",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-014",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-015",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "escalated_replacement",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-016",
+        "steps": [
+            "retry:get_customer:1",
+            "retry:get_customer:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Customer not found"
+    },
+    {
+        "ticket_id": "TKT-017",
+        "steps": [
+            "get_customer",
+            "retry:get_order:1",
+            "retry:get_order:2",
+            "escalate"
+        ],
+        "decision": "processing_failed",
+        "confidence": "low",
+        "error": "Order not found: ORD-9999"
+    },
+    {
+        "ticket_id": "TKT-018",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:refund",
+            "send_reply",
+            "escalate"
+        ],
+        "decision": "flagged_policy_abuse",
+        "confidence": "low",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-019",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:general",
+            "send_reply"
+        ],
+        "decision": "policy_guidance_sent",
+        "confidence": "high",
+        "error": null
+    },
+    {
+        "ticket_id": "TKT-020",
+        "steps": [
+            "get_customer",
+            "get_order",
+            "get_product",
+            "classify:product_issue",
+            "send_reply"
+        ],
+        "decision": "product_issue_reply_sent",
+        "confidence": "high",
+        "error": null
     }
 ]
