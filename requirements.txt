@@ -4,7 +4,7 @@
 ## 🔹 5. Add requirements.txt
 
 ```txt
-langchain
-langgraph
-openai
+streamlit
 python-dotenv
+openai
+pandas
