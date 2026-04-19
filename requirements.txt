@@ -4,7 +4,6 @@
 ## 🔹 5. Add requirements.txt
 
 ```txt
-streamlit
-python-dotenv
-openai
-pandas
+streamlit==1.32.0
+pandas==2.0.3
+python-dotenv==1.0.1
